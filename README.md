@@ -1,5 +1,7 @@
 # ch-eli-mcp
 
+<!-- mcp-name: io.github.matematicsolutions/ch-eli-mcp -->
+
 MCP server for Swiss federal legislation via Fedlex, the Federal
 Chancellery's official publication platform. Fedlex is genuinely
 ELI-native (European Legislation Identifier) even though Switzerland is
