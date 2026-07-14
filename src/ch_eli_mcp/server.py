@@ -20,6 +20,7 @@ import httpx
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
+from . import runtime
 from .audit import AuditLogger, hash_input, timer
 from .citations import build_citation, parse_act
 from .client import DEFAULT_BASE_URL, FedlexClient
@@ -78,7 +79,7 @@ _VALID_LANGS = frozenset({"DEU", "FRA", "ITA", "ENG"})
 
 
 def _base_url() -> str:
-    return os.environ.get("CH_ELI_BASE_URL", DEFAULT_BASE_URL)
+    return os.environ.get("CH_ELI_BASE_URL", runtime.base_url("eli", DEFAULT_BASE_URL))
 
 
 def _audit() -> AuditLogger:
