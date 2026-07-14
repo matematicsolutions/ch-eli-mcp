@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "generated_note": "Volatile runtime config for ch-eli-mcp. Edit + re-run the release workflow to repoint endpoints or bump the citation grammar WITHOUT a PyPI release. Consumed lazily on first tool call; falls back to the hardcoded defaults in the client modules if unavailable (offline-safe).",
+  "base_urls": {
+    "eli": "https://fedlex.data.admin.ch/sparqlendpoint"
+  },
+  "citation_grammar_version": "ch-eli/2026.07"
+}
