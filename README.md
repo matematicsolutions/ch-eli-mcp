@@ -32,6 +32,26 @@ Systematische Sammlung / Classified Compilation citation convention).
 pip install ch-eli-mcp
 ```
 
+
+### Windows 11 ze Smart App Control
+
+Smart App Control blokuje niepodpisane pliki wykonywalne, a `uvx.exe`, `pip.exe`
+i generowany przy instalacji `ch-eli-mcp.exe` podpisane nie sa. `python.exe`
+z python.org jest podpisany przez Python Software Foundation, wiec uruchomienie
+przez modul omija blokade:
+
+```bash
+python -m pip install ch-eli-mcp
+python -m ch_eli_mcp
+```
+
+```json
+{ "mcpServers": { "ch-eli-mcp": { "command": "python", "args": ["-m", "ch_eli_mcp"] } } }
+```
+
+Nie wylaczaj Smart App Control, zeby to obejsc - wylaczenia nie da sie cofnac
+bez ponownej instalacji systemu.
+
 ## Configuration
 
 | Env var | Default |
