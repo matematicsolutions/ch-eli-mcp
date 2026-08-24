@@ -36,6 +36,7 @@ This MCP server exposes Fedlex, the Swiss Federal Chancellery's official publica
 
 ## Hard constraints
 
+- **Do not answer past the edge of this corpus** - when a search comes back empty, or the question touches material this connector does not carry, call `ch_coverage` and relay what it says is missing. Absence here is not absence in the law.
 - **The ELI is the URI itself** - `lex_uri` is never invented, it comes directly from the SPARQL query result.
 - **Every response has `human_readable_citation` + `source_url`** - cite both to the user (e.g. "Bundesverfassung der Schweizerischen Eidgenossenschaft (SR 101)").
 - **No full-text law content** - this connector returns metadata (title, SR number), not the operative articles. Follow `source_url` for that.
