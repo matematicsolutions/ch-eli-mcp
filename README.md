@@ -19,6 +19,7 @@ where the full text lives.
 |---|---|
 | `ch_search_acts` | Full-text search over act titles, in one of four languages |
 | `ch_get_act` | Full detail for one act by its Fedlex ELI URI |
+| `ch_coverage` | Declare what this connector covers, when each family was captured, and - explicitly - what it does NOT cover. Every gap carries a fallback. |
 
 Every response carries `lex_uri` (the native ELI URI - not invented, taken
 directly from Fedlex), `source_url` (the public HTML page), and

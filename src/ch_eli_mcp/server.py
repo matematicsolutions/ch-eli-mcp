@@ -24,6 +24,7 @@ from . import runtime
 from .audit import AuditLogger, hash_input, timer
 from .citations import build_citation, parse_act
 from .client import DEFAULT_BASE_URL, FedlexClient
+from .coverage import Coverage, build_coverage
 
 INSTRUCTIONS = """\
 This MCP server exposes Fedlex, the Swiss Federal Chancellery's official publication platform for federal legislation. Fedlex is genuinely ELI-native - the resource URI itself is the ELI (European Legislation Identifier), even though Switzerland is not an EU member. Multilingual: German, French, Italian, English.
@@ -147,6 +148,20 @@ async def ch_search_acts(query: str, lang: str = "DEU", limit: int = 20) -> dict
 
 # ---------------------------------------------------------------------------
 # ch_get_act
+@mcp.tool(annotations=READ_ONLY)
+async def ch_coverage() -> Coverage:
+    """Declare what this connector covers, how it is sourced, and what it does NOT cover.
+
+    Call this before telling a user that the law "does not contain" something, and whenever
+    a search comes back empty: the absence may be a gap in this connector rather than in the
+    law. Every gap carries a fallback saying where to look instead.
+
+    Returns:
+        ``Coverage`` with families, an as-of note, and a non-empty list of known gaps.
+    """
+    return build_coverage()
+
+
 # ---------------------------------------------------------------------------
 
 
