@@ -1,0 +1,214 @@
+{
+  "package_version": "0.3.3",
+  "tools": {
+    "ch_coverage": {
+      "descriptor": {
+        "annotations": {
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true,
+          "readOnlyHint": true
+        },
+        "description": "Declare what this connector covers, how it is sourced, and what it does NOT cover.\n\nCall this before telling a user that the law \"does not contain\" something, and whenever\na search comes back empty: the absence may be a gap in this connector rather than in the\nlaw. Every gap carries a fallback saying where to look instead.\n\nReturns:\n    ``Coverage`` with families, an as-of note, and a non-empty list of known gaps.",
+        "inputSchema": {
+          "additionalProperties": false,
+          "properties": {},
+          "type": "object"
+        },
+        "meta": {
+          "fastmcp": {
+            "tags": []
+          }
+        },
+        "name": "ch_coverage",
+        "outputSchema": {
+          "additionalProperties": true,
+          "description": "What this connector covers, how it is sourced, and what it does not cover.",
+          "properties": {
+            "as_of_note": {
+              "description": "States what the dates mean, and what they do not promise.",
+              "type": "string"
+            },
+            "families": {
+              "items": {
+                "additionalProperties": true,
+                "description": "One data family this connector exposes.",
+                "properties": {
+                  "captured_at": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Date this family was last captured (ISO). None when queried live."
+                  },
+                  "live": {
+                    "default": true,
+                    "description": "True when queried live instead of from a snapshot.",
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "description": "Data family, e.g. 'Federal legislation'.",
+                    "type": "string"
+                  },
+                  "source": {
+                    "description": "Official source the data comes from.",
+                    "type": "string"
+                  },
+                  "tool": {
+                    "description": "Tool or tools that reach this family.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "tool",
+                  "source"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "known_gaps": {
+              "description": "Never empty. An empty list would mean 'not checked', not 'no gaps'.",
+              "items": {
+                "additionalProperties": true,
+                "description": "A known, named hole in this connector's coverage - plus the way around it.",
+                "properties": {
+                  "fallback": {
+                    "description": "Where to go instead.",
+                    "type": "string"
+                  },
+                  "family": {
+                    "description": "Which family the gap belongs to.",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Stable gap identifier.",
+                    "type": "string"
+                  },
+                  "missing": {
+                    "description": "What is NOT available through this connector.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "family",
+                  "missing",
+                  "fallback"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "status": {
+              "default": "ok",
+              "enum": [
+                "ok",
+                "degraded",
+                "failed"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "as_of_note"
+          ],
+          "type": "object"
+        }
+      },
+      "sha256": "64d5af946db16be5cc26f2aa0addd5789c629e4ad8d5714b4d02e5e80a4da804"
+    },
+    "ch_get_act": {
+      "descriptor": {
+        "annotations": {
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true,
+          "readOnlyHint": true
+        },
+        "description": "Fetch full detail for one Swiss federal act by its Fedlex ELI URI.",
+        "inputSchema": {
+          "additionalProperties": false,
+          "properties": {
+            "lang": {
+              "default": "DEU",
+              "description": "one of ``\"DEU\"``, ``\"FRA\"``, ``\"ITA\"``, ``\"ENG\"`` (default ``\"DEU\"``).",
+              "type": "string"
+            },
+            "uri": {
+              "description": "e.g. ``\"https://fedlex.data.admin.ch/eli/cc/1999/404\"``.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "uri"
+          ],
+          "type": "object"
+        },
+        "meta": {
+          "fastmcp": {
+            "tags": []
+          }
+        },
+        "name": "ch_get_act",
+        "outputSchema": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "sha256": "93c6210ed71e9b62f62175c2fd708bcb9103bfb3dc4cc9aedf9d98fefc0af735"
+    },
+    "ch_search_acts": {
+      "descriptor": {
+        "annotations": {
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": true,
+          "readOnlyHint": true
+        },
+        "description": "Full-text search over Swiss federal act titles.",
+        "inputSchema": {
+          "additionalProperties": false,
+          "properties": {
+            "lang": {
+              "default": "DEU",
+              "description": "one of ``\"DEU\"``, ``\"FRA\"``, ``\"ITA\"``, ``\"ENG\"`` (default ``\"DEU\"``).",
+              "type": "string"
+            },
+            "limit": {
+              "default": 20,
+              "description": "max results (default 20).",
+              "type": "integer"
+            },
+            "query": {
+              "description": "free text, e.g. ``\"Datenschutz\"``.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        },
+        "meta": {
+          "fastmcp": {
+            "tags": []
+          }
+        },
+        "name": "ch_search_acts",
+        "outputSchema": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "sha256": "d33ce929ca199ef821e2245ef697bd77c5d65ab6539c6253fd77072da6174a70"
+    }
+  },
+  "toolset_sha256": "5539e9498b33180faeade7e10c9856fc14911ab13707945b7b1556e7a3b759ee"
+}
